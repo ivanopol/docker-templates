@@ -1,0 +1,10 @@
+version: '3'
+services:
+  apache:
+    build:
+        context: ./
+        dockerfile: docker/apache.docker
+    ports:
+      - 80:80
+    volumes:
+      - ./public_html:/var/www/html
