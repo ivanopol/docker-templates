@@ -18,6 +18,8 @@ services:
     depends_on:
       - apache
   php:
-    image: php:5.6-fpm
+    build:
+        context: ./
+        dockerfile: docker/php-fpm.docker    
     volumes:
       - ./public_html:/var/www/html
