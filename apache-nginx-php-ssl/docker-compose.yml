@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  apache:
+    build:
+      context: ./
+      dockerfile: docker/apache.docker
+    volumes:
+      - ./public_html:/var/www/html
+      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
+      - ./docker/ssl/domain.crt:/usr/local/apache2/conf/server.crt
+      - ./docker/ssl/domain.key:/usr/local/apache2/conf/server.key
+    depends_on:
+      - php
+  nginx:
+    image: nginx:1.13
+    ports:
+      - 443:443
+    volumes:
+      - ./public_html:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - apache
+  php:
+    build:
+        context: ./
+        dockerfile: docker/php-fpm.docker    
+    volumes:
+      - ./public_html:/var/www/html
