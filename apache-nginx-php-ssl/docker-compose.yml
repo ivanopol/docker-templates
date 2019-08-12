@@ -5,6 +5,9 @@ services:
     build:
       context: ./
       dockerfile: docker/apache.docker
+    ports:
+      - "80:80"
+      - "9443:9443"
     volumes:
       - ./public_html:/var/www/html
       - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
